@@ -20,6 +20,7 @@
         <p>
             露出不足の画像を明暗反転するとモヤの掛かった画像のように見える、<br>
             という思い付き的な発想で、露出不足改善に dehaze を利用することもできます。<br>
+            <a href="https://www.researchgate.net/profile/Shengping-Zhang-5/publication/271554887_Night_video_enhancement_using_improved_dark_channel_prior">NIGHT VIDEO ENHANCEMENT USING IMPROVED DARK CHANNEL PRIOR (2013)</a><br>
             <img src="images/dehaze3.svg"><br>
         </p>
         <h2>環境構築方法</h2>
