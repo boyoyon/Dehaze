@@ -66,17 +66,9 @@ def getAirLight(darkchannel):
 
     height, width = darkchannel.shape[:2]
 
-    histogram = np.zeros((256,3), np.int32)
-
-    for y in range(height):
-        for x in range(width):
-            b = darkchannel[y][x][0]
-            g = darkchannel[y][x][1]
-            r = darkchannel[y][x][2]
-
-            histogram[b][0] += 1
-            histogram[g][1] += 1
-            histogram[r][2] += 1
+    histogram = []
+    for ch in range(3):
+        histogram.append(cv2.calcHist([darkchannel], [ch], None, [256], [0, 256]))
 
     th = width * height // 1000
 
@@ -86,20 +78,20 @@ def getAirLight(darkchannel):
 
     for i in reversed(range(256)):
         if not boolB:
-            numB += histogram[i][0]        
-            sumB += histogram[i][0] * i
+            numB += histogram[0][i]        
+            sumB += histogram[0][i] * i
             if numB > th:
                 boolB = True
 
         if not boolG:
-            numG += histogram[i][1]
-            sumG += histogram[i][1] * i
+            numG += histogram[1][i]
+            sumG += histogram[1][i] * i
             if numG > th:
                 boolG = True
 
         if not boolR:
-            numR += histogram[i][2]
-            sumR += histogram[i][2] * i
+            numR += histogram[2][i]
+            sumR += histogram[2][i] * i
             if numR > th:
                 boolR = True
 
@@ -183,6 +175,7 @@ def main():
     
     AirLight = getAirLight(darkchannel)
     AirLight = np.array(AirLight) / 255.0
+    AirLight = np.squeeze(AirLight)
 
     print('(3/5) Air Light calculated')
     
@@ -205,6 +198,7 @@ def main():
     filename = os.path.splitext(base)[0]
     dst_path = 'dehazed_%s.png' % filename
     cv2.imwrite(dst_path, dehazed)
+    print('save %s' % dst_path)
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()
