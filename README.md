@@ -6,8 +6,11 @@
         <h1><center>Dehaze</center></h1>
         <h2>なにものか？</h2>
         <p>
-            モヤの掛かった画像からモヤを除去した画像を生成します。<br>
+            モヤの掛かった画像からモヤを除去した画像を生成します。<br />
+            <br />
+            (実行結果１) python src\dehaze.py data\hazy3.png<br />
             <img src="images/dehaze1.png"><br>
+            (実行結果２)python src\inv-dehaze-inv.py data\hazy6.png<br />
             <img src="images/dehaze2.png"><br>
         </p>
         <h3>処理概要</h3>
