@@ -112,13 +112,9 @@ def getTmax(darkchannel, airlight, weight):
 
     height, width = darkchannel.shape[:2]
 
-    tmax = np.empty((height, width, 3), np.uint8)
+    dc = darkchannel.astype(np.float32) / 255.0
 
-    for y in range(height):
-        for x in range(width):
-            tmax[y][x][0] = (255 * 100 - weight * 255 * darkchannel[y][x][0] // airlight[0]) // 100
-            tmax[y][x][1] = (255 * 100 - weight * 255 * darkchannel[y][x][1] // airlight[1]) // 100
-            tmax[y][x][2] = (255 * 100 - weight * 255 * darkchannel[y][x][2] // airlight[2]) // 100
+    tmax = (1.0 - weight / 100 * dc / airlight)
 
     return tmax
 
@@ -130,21 +126,12 @@ def dehaze(src, tmax, airlight):
 
     height, width = src.shape[:2]
 
-    dst = np.empty((height, width, 3), np.uint8)
- 
-    for y in range(height):
-        for x in range(width):
-            SRCb = src[y][x][0]
-            SRCg = src[y][x][1]
-            SRCr = src[y][x][2]
+    src = src.astype(np.float32) / 255.0
+    dst = (src - airlight) / (tmax + 0.01) + airlight 
 
-            DSTb = ((SRCb - airlight[0]) * 255 + tmax[y][x][0] * airlight[0]) // tmax[y][x][0]
-            DSTg = ((SRCg - airlight[1]) * 255 + tmax[y][x][1] * airlight[1]) // tmax[y][x][1]
-            DSTr = ((SRCr - airlight[2]) * 255 + tmax[y][x][2] * airlight[2]) // tmax[y][x][2]
-
-            dst[y][x][0] = min(255, max(0, DSTb))
-            dst[y][x][1] = min(255, max(0, DSTg))
-            dst[y][x][2] = min(255, max(0, DSTr))
+    dst *= 255
+    dst = np.clip(dst, 0, 255)
+    dst = dst.astype(np.uint8)
 
     return dst
 
@@ -195,7 +182,8 @@ def main():
     print('(2/5) Darkchannel refined')
     
     AirLight = getAirLight(darkchannel)
-    
+    AirLight = np.array(AirLight) / 255.0
+
     print('(3/5) Air Light calculated')
     
     tmax = getTmax(darkchannel, AirLight, WEIGHT)
@@ -210,6 +198,7 @@ def main():
     count1 = cv2.getTickCount()
     print((count1 - count0) / freq)
     
+    cv2.imwrite('dehazed.png', dehazed)
     cv2.imshow('source', src)
     cv2.imshow('dehazed', dehazed)
     
