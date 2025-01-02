@@ -200,7 +200,6 @@ def main():
     count1 = cv2.getTickCount()
     print((count1 - count0) / freq)
     
-    cv2.imwrite('dehazed.png', dehazed)
     cv2.imshow('source', src)
     cv2.imshow('dehazed', dehazed)
     
