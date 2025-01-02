@@ -37,11 +37,19 @@
             動作速度が遅いので、高速化したい場合は src/cpp のソースをビルドしてください。
         </p>
         <h2>使い方</h2>
+        <h3>モヤの除去</h3>
         <p>
             python dehaze.py (画像ファイル名) [(weight：1～99：デフォルト70) (window_size：デフォルト45)]<br>
             <br>
             入力画像、dehazeされた画像が表示されます。<br>
             ESCキー押下でプログラム終了。dehazed_(画像ファイル名).png に結果が保存されます。
+        </p>
+        <h3>露出不足の補正</h3>
+        <p>
+            python inv-dehaze-inv.py (画像ファイル名) [(weight：1～99：デフォルト70) (window_size：デフォルト10)]<br>
+            <br>
+            入力画像、inv-dehaze-invされた画像が表示されます。<br>
+            ESCキー押下でプログラム終了。inv-dehaze-inv_(画像ファイル名).png に結果が保存されます。
         </p>
     </body>
 </html>
