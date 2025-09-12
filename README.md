@@ -60,7 +60,7 @@
             ESCキー押下でプログラム終了。inv-dehaze-inv_(画像ファイル名).png に結果が保存されます。
         </p>
         <p>
-        手動で2段階(明暗補正→モヤ除去)する場合<br>
+        手動で2段階(明暗補正→モヤ除去)実行する場合<br>
         python MagScale.py (露出不足画像)<br>
         python dehaze.py (明暗補正した画像)
         </p>
