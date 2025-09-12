@@ -47,6 +47,11 @@
             入力画像、dehazeされた画像が表示されます。<br>
             ESCキー押下でプログラム終了。dehazed_(画像ファイル名).png に結果が保存されます。
         </p>
+        <p>
+        モヤの除去で画面が暗くなるので補正してみた。<br>
+        python MagScale.py (モヤを除去した画像)
+        </p>
+        <center><img src="images/dehazed_magscaled.png"></center>
         <h3>露出不足の補正</h3>
         <p>
             python inv-dehaze-inv.py (画像ファイル名) [(weight：1～99：デフォルト70) (window_size：デフォルト10)]<br>
